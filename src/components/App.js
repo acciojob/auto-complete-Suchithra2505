@@ -3,29 +3,30 @@ import React from "react";
 import './../styles/App.css';
 
 const App = () => {
-  const fruits = ["apple", "banana", "cherry", "date", "elderberry", "fig"];
-  const [search, setSearch] = useState("");
-  const [filtered, setFiltered] = useState(fruits);
+  const totalFruits = ["apple", "banana", "cherry", "date", "elderberry", "fig"]
 
-  useEffect(() => {
-    setFiltered(fruits.filter((fruit) => {
-      return fruit.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-    }))
-  },[search])
+  let [fruits,setfruits] = useState(totalFruits);
+  console.log(fruits);
 
+  const showSuggestion= (e)=>{
+    let filteredFruits = [];
+    filteredFruits = totalFruits.filter((value)=>{
+      return value.toLowerCase().includes(e.target.value);
+    })
+    setfruits(filteredFruits);
+  }
   return (
     <div>
         {/* Do not remove the main div */}
         <h1>Search item</h1>
-      <input type="text" onChange={(event) => setSearch(event.target.value)} />
-      <ul>
-        {
-          filtered.map((fruit) => {
-            return <li>{fruit}</li>
-          })
-        }
-      </ul>
-
+        <input type="text" onChange={(e)=>showSuggestion(e)}/>
+        <ul>
+          {      
+            fruits.map((value,index)=>(
+              <li key={index}>{value}</li>
+            ))
+          }
+        </ul>
     </div>
   )
 }
